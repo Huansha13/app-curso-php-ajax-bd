@@ -1,0 +1,70 @@
+<div id="viewCurso" class="container">
+    <ul id="cursoList" class="list-group mt-2">
+        <!-- Aquí se mostrarán los cursos agregados -->
+    </ul>
+</div>
+
+<script>
+    // Función para cargar la lista de cursos mediante AJAX
+    function loadCursos() {
+        $.ajax({
+            type: 'GET',
+            url: 'php/listar_cursos.php',
+            success: function (response) {
+                // Parsea la respuesta JSON
+                var cursos = JSON.parse(response);
+
+                // Limpia la lista de cursos
+                $('#cursoList').empty();
+
+                // Agrega cada curso a la lista
+                cursos.forEach(function (curso) {
+
+                    var certificado = curso.certificado === '1' ? 'Sí' : 'No';
+
+                    var listItem = `
+                    <li class="list-group-item d-flex justify-content-between">
+                        <div>
+                            <h4 class="m-0 p-0 pb-2">COD: ${curso.id} - ${curso.nombre}</h4>
+                            Duración: ${curso.duracion} hora${curso.duracion > 1 ? 's' : ''}<br>
+                            Temas: ${curso.temas}<br>
+                            Modalidad: ${curso.modalidad}<br>
+                            Certificado: ${certificado}
+                        </div>
+                        <div>
+                            <button class="btn btn-danger" onclick="eliminarCurso(${curso.id})">
+                                <i class="fas fa-trash"></i> Eliminar
+                            </button>
+                        </div>
+                    </li>
+                    `;
+
+
+                    $('#cursoList').append(listItem);
+                });
+            }
+        });
+    }
+
+    // Carga la lista de cursos al cargar la página
+    loadCursos();
+
+    // Función para eliminar un curso mediante AJAX
+    function eliminarCurso(idCurso) {
+        console.log("🚀 ~ file: listar-cursos.html:48 ~ eliminarCurso ~ idCurso:", idCurso)
+        if (confirm("¿Estás seguro de eliminar este curso?")) {
+            $.ajax({
+                type: 'POST',
+                url: 'php/eliminar_curso.php',
+                data: { id: idCurso },
+                success: function (response) {
+                    // Vuelve a cargar la lista de cursos después de eliminar el curso
+                    loadCursos();
+                },
+                error: function (xhr, status, error) {
+                    alert("Se produjo un error al eliminar el curso. Por favor, intenta nuevamente.");
+                }
+            });
+        }
+    }
+</script>

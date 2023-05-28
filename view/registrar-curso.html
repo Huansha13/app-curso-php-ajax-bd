@@ -1,0 +1,70 @@
+<div class="container mt-3">
+    <form id="cursoForm" method="post">
+        <!--<div class="form-floating mb-3">
+            <input type="text" class="form-control" id="nombre" placeholder=" ">
+            <label for="nombre">Nombre del curso</label>
+        </div>-->
+
+        <div class="form-floating mb-2">
+            <input type="text" class="form-control" id="nombre" name="nombre" placeholder=" ">
+            <label for="nombre">Nombre del curso:</label>
+        </div>
+        <div class="form-floating mb-2">
+            <input type="number" class="form-control" id="duracion" name="duracion" placeholder=" ">
+            <label for="duracion">Duración:</label>
+        </div>
+        <div class="form-control mb-2">
+            <label for="temas">Temas:</label>
+            <select multiple class="form-control" id="temas" name="temas[]">
+                <option value="HTML">HTML</option>
+                <option value="CSS">CSS</option>
+                <option value="JavaScript">JavaScript</option>
+                <option value="PHP">PHP</option>
+                <option value="MySQL">MySQL</option>
+            </select>
+        </div>
+        <div class="form-control mb-2">
+            <label>Modalidad:</label><br>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="modalidad" value="presencial">
+                <label class="form-check-label">Presencial</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="modalidad" value="online">
+                <label class="form-check-label">Online</label>
+            </div>
+        </div>
+        <div class="form-control">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="certificado" value="1">
+                <label class="form-check-label">Certificado</label>
+            </div>
+        </div>
+        <hr>
+        <button type="submit" class="btn btn-primary">Agregar</button>
+    </form>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $(document).ready(function () {
+            // Manejo del formulario de curso mediante AJAX
+            $('#cursoForm').submit(function (e) {
+                e.preventDefault();
+
+                var formData = $(this).serialize();
+
+                $.ajax({
+                    type: 'POST',
+                    url: 'php/guardar_curso.php',
+                    data: formData,
+                    success: function (response) {
+                        // Limpia el formulario
+                        $('#cursoForm')[0].reset();
+                    }
+                });
+            });
+
+        });
+    });
+</script>
