@@ -18,7 +18,7 @@ if ($conn->query($sql) === TRUE) {
     $response = array('success' => true);
 } else {
     // Ocurrió un error al agregar el curso
-    $response = array('success' => false, 'error' => $conn->error);
+    $response = array('success' => false, 'error' => "Ocurrió un error al agregar el curso");
 }
 
 // Cerrar la conexión a la base de datos
