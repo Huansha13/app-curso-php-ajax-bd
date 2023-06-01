@@ -47,24 +47,22 @@
 
 <script>
     $(document).ready(function () {
-        $(document).ready(function () {
-            // Manejo del formulario de curso mediante AJAX
-            $('#cursoForm').submit(function (e) {
-                e.preventDefault();
+        // Manejo del formulario de curso mediante AJAX
+        $('#cursoForm').submit(function (e) {
+            e.preventDefault();
 
-                var formData = $(this).serialize();
+            var formData = $(this).serialize();
 
-                $.ajax({
-                    type: 'POST',
-                    url: 'php/guardar_curso.php',
-                    data: formData,
-                    success: function (response) {
-                        // Limpia el formulario
-                        $('#cursoForm')[0].reset();
-                    }
-                });
+            $.ajax({
+                type: 'POST',
+                url: 'php/guardar_curso.php',
+                data: formData,
+                success: function (response) {
+                    // Limpia el formulario
+                    $('#cursoForm')[0].reset();
+                }
             });
-
         });
+
     });
 </script>
